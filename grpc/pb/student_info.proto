@@ -1,0 +1,26 @@
+syntax = "proto3";
+package main;
+option go_package ="./pb";
+
+//定义服务
+service Student{
+  //get user info
+  rpc GetInfo (StudentInfoRequest) returns (StudentInfoResponse){};
+}
+
+//request
+message StudentInfoRequest{
+  int32 id = 1;
+}
+
+//response
+message StudentInfoResponse{
+  int32 id = 1;
+  string name = 2;
+  bool male = 3;
+  repeated int32 scores = 4;
+}
+
+
+
+
