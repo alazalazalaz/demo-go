@@ -1,5 +1,9 @@
-package main 
-import "fmt"
+package main
+
+import (
+	"fmt"
+	"unsafe"
+)
 
 /*
 map详解
@@ -46,4 +50,15 @@ func main(){
 	for country := range countryCapitalMap{
 		fmt.Printf("删除后 key: %s, value: %s \n", country, countryCapitalMap[country])
 	}
+
+	/*
+	5.函数内外的修改
+	*/
+	var mapX = make(map[int]int, 3)
+	fmt.Printf("unsafe.sizeof(mapX)=%d\r\n", unsafe.Sizeof(mapX))
+	var mapY = map[int]int{
+		1: 1,
+	}
+	fmt.Printf("unsafe.sizeof(mapX)=%d\r\n", unsafe.Sizeof(mapY))
+
 }

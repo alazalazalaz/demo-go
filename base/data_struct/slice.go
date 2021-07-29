@@ -1,5 +1,9 @@
-package main 
-import "fmt"
+package main
+
+import (
+	"fmt"
+	"unsafe"
+)
 
 /*
 slice切片是对数组的抽象
@@ -86,6 +90,38 @@ func main(){
 	fmt.Println(ss2)//[100 5 6 7]
 	fmt.Println(abc)//[1 2 3 100 5 6 7 8 9]
 
+	/*
+	6. 切片大小
+	*/
+	var arr = [5]int{1, 2}
+	fmt.Printf("intArray size:%d\r\n", unsafe.Sizeof(arr))//5*8=40字节
+	sliX := []int{1, 2, 3, 4}
+	fmt.Printf("sliX size:%d\r\n", unsafe.Sizeof(sliX))//始终是24
+
+	/*
+	7、数组和切片在函数内外修改的影响
+	*/
+	var arrX = [3]int{5, 6}
+	fmt.Printf("before arrX=%v, &arrX=%p \r\n", arrX, &arrX)
+	changeArrX(arrX)
+	fmt.Printf("after arrX=%v, &arrX=%p \r\n\r\n", arrX, &arrX)
+
+	var sliceX = []int{5, 6}
+	fmt.Printf("before sliceX=%v, &sliceX=%p \r\n", sliceX, &sliceX)
+	changeSliceX(sliceX)
+	fmt.Printf("after sliceX=%v, &sliceX=%p \r\n\r\n", sliceX, &sliceX)
+}
+
+func changeArrX(arrX [3]int){
+	arrX[0] = 100
+	arrX[1] = 200
+	fmt.Printf("inner arrX=%v, &arrX=%p \r\n", arrX, &arrX)
+}
+
+func changeSliceX(sliceX []int){
+	sliceX[0] = 100
+	sliceX[1] = 200
+	fmt.Printf("inner sliceX=%v, &sliceX=%p \r\n", sliceX, &sliceX)
 }
 
 

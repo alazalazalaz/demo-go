@@ -11,30 +11,41 @@ import "fmt"
 
 func main() {
 
-	var a int = 10 //声明实际变量
-	var ip *int //声明指针变量
-	ip = &a //把实际变量的内存地址赋给指针变量
+	var x int = 10 //声明实际变量
+	var ip *int    //声明指针变量
+	ip = &x        //把实际变量的内存地址赋给指针变量
 
-	//a变量内存地址是(&a)
-	fmt.Printf("&a=%x\n", &a)
-
-	fmt.Printf("a=%d\n", a)
-
+	//a变量内存地址是(&x)
+	fmt.Printf("before changeIp() func, x=%d, &x=%x \r\n", x, &x)
 	//变量的值是(值是a的内存地址)
-	fmt.Printf("ip=%x\n", ip)
+	fmt.Printf("ip=%#x, *ip=%d\n", ip, *ip)
+	fmt.Printf("*&x=%d\n", *&x)
 
-	fmt.Printf("*ip=%d\n", *ip)
+	//changeIp(ip)
+	//fmt.Printf("after changeIp() func, x=%d, &x=%#x \r\n", x, &x)
 
-	fmt.Printf("*&a=%d\n", *&a)
+	fmt.Printf("before copyIp() func, ip=%#x, &ip=%#x \r\n", ip, &ip)
+	copyIp(ip)
+	fmt.Printf("after copyIp() func, ip=%#x, &ip=%#x \r\n", ip, &ip)
 
 	emptyPtr()
+}
+
+func changeIp(ip *int){
+	*ip = 20
+	fmt.Printf("inner changeIp() func, ip=%#x, *ip=%d\r\n", ip, *ip)
+}
+
+func copyIp(ip *int){
+	fmt.Printf("inner copyIp() func, ip=%#x, &ip=%#x \r\n", ip, &ip)
+	ip = nil
+	fmt.Printf("inner copyIp() func ip=>nil, ip=%#x, &ip=%#x \r\n", ip, &ip)
 }
 
 func emptyPtr(){
 	var ptr *int
 
 	fmt.Printf("空指针ptr=%x\n", ptr)//输出：0
-
 	// fmt.Printf("空指针*ptr=%x\n", *ptr)//会报错，因为地址是0，找不到值
 
 	if ptr == nil {

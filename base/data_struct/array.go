@@ -12,7 +12,6 @@ func main(){
 	/*
 	1. 定义
 	*/
-
 	//var variable_name[SIZE] variable_type
 	var n [10] int
 	for i := 0; i < 10; i++{

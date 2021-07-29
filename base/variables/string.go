@@ -5,6 +5,7 @@ import (
 	"github.com/thinkeridea/go-extend/exunicode/exutf8"
 	"reflect"
 	"unicode/utf8"
+	"unsafe"
 )
 
 /*GO中的字符串，默认使用的是UTF-8编码*/
@@ -12,10 +13,12 @@ func main(){
 	fmt.Println('a' - 'b')
 	name := "abc一"
 	by := []byte(name)
+	byRune := []rune(name)
 	empty := ""
 	emptyBytes := []byte(empty)
 
-	fmt.Println(name, by, emptyBytes)//abc一 [97 98 99 228 184 128] []
+	fmt.Printf("size of name is :%d \r\n", unsafe.Sizeof(name))
+	fmt.Println(name, by, emptyBytes, byRune)//abc一 [97 98 99 228 184 128] [] [97 98 99 19968]
 	fmt.Printf("%T---%T\n", name, by)//string---[]uint8
 
 	/*1.字符串截取和长度*/
