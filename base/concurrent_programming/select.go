@@ -21,7 +21,7 @@ func selectTest() {
 	case s1 := <-output1:
 		fmt.Println("s1=", s1)
 	case s2 := <-output2:
-		fmt.Println("s2=", s2)//输出_test2.1，然后退出主协程，所以看不到_test1的打印了
+		fmt.Println("s2=", s2)//随机输出_test2.1或者上面一个case输出_test1.1，然后退出主协程，所以看不到其他的打印了
 	//default:
 	//	fmt.Println("default")
 	//	time.Sleep(time.Second* 5)

@@ -6,6 +6,13 @@ import (
 	"time"
 )
 
+func main() {
+	ctx, _ := context.WithTimeout(context.Background(), 2 * time.Second)
+	go HandelRequest(ctx)
+
+	time.Sleep(10 * time.Second)
+}
+
 func HandelRequest(ctx context.Context) {
 	go WriteRedis(ctx)
 	go WriteDatabase(ctx)
@@ -47,9 +54,3 @@ func WriteDatabase(ctx context.Context) {
 	}
 }
 
-func main() {
-	ctx, _ := context.WithTimeout(context.Background(), 2 * time.Second)
-	go HandelRequest(ctx)
-
-	time.Sleep(10 * time.Second)
-}

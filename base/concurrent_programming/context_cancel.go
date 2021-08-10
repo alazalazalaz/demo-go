@@ -6,6 +6,18 @@ import (
 	"time"
 )
 
+func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	go HandelRequest1(ctx)
+
+	time.Sleep(1 * time.Second)
+	fmt.Println("It's time to stop all sub goroutines!")
+	cancel()
+
+	//Just for test whether sub goroutines exit or not
+	time.Sleep(10 * time.Second)
+}
+
 func HandelRequest1(ctx context.Context) {
 	go WriteRedis1(ctx)
 	go WriteDatabase1(ctx)
@@ -47,14 +59,3 @@ func WriteDatabase1(ctx context.Context) {
 	}
 }
 
-func main() {
-	ctx, cancel := context.WithCancel(context.Background())
-	go HandelRequest1(ctx)
-
-	time.Sleep(1 * time.Second)
-	fmt.Println("It's time to stop all sub goroutines!")
-	cancel()
-
-	//Just for test whether sub goroutines exit or not
-	time.Sleep(10 * time.Second)
-}
