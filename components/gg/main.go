@@ -94,8 +94,16 @@ func _handleOneText(dc *gg.Context, text string, currentX *float64, currentY *fl
 	tmpStrRune := make([]rune, 0)
 	textArray := make([]string, 0)
 	for _, oneWord := range textRune{
+		//\r\n识别为换行符
+		if oneWord == 10 || oneWord == 13{
+			//主动换行
+			textArray = append(textArray, string(tmpStrRune))
+			tmpStrRune = nil
+			continue
+		}
 		tmpStrRune = append(tmpStrRune, oneWord)
 		if wid, _ := dc.MeasureString(string(tmpStrRune)); wid > WIDTH {
+			//被动换行
 			//删除最后一个元素
 			lastOneWord := tmpStrRune[len(tmpStrRune) - 1]
 			tmpStrRune = tmpStrRune[:len(tmpStrRune) - 1]
