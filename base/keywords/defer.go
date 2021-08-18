@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -10,8 +11,13 @@ defer会在该函数return之前执行。
  */
 
 func main(){
-	//testParam()
+	//测试未注册到的defer会不会执行
+	fmt.Println(testUnRegisterDefer(1))
 
+	//从defer中返回
+	testDeferReturn()
+
+	//testParam()
 	fmt.Println(testReturn())
 }
 
@@ -39,4 +45,54 @@ func testReturn() (result int){
 	}()
 
 	return result
+}
+
+//输入1时，返回:
+//第二个defer num=1
+//第一个defer num=1
+//1
+
+//输入20时，返回：
+//第一个defer num=400
+//20
+
+//说明未注册到的defer不会被执行
+func testUnRegisterDefer(num int)int{
+	defer func() {
+		num = num * num
+		fmt.Printf("第一个defer num=%d\n", num)
+	}()
+	if num > 10 {
+		return num
+	}
+
+	defer func() {
+		fmt.Printf("第二个defer num=%d\n", num)
+	}()
+
+	return num
+}
+
+func testDeferReturn(){
+	name := getName(false)
+	log.Printf("name is :%s", name)
+
+}
+
+func getName(right bool)(name string){
+	log.Println("getName() begin")
+	defer func() {
+		log.Println("im getName() defer")
+		if err := recover(); err != nil {
+			name = fmt.Sprintf("%s", err)
+		}
+
+	}()
+
+	if right{
+		return "allen"
+	}
+
+	panic("panic no name")
+	return "unknown"
 }

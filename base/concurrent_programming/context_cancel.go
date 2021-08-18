@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"time"
 )
 
@@ -11,11 +11,12 @@ func main() {
 	go HandelRequest1(ctx)
 
 	time.Sleep(1 * time.Second)
-	fmt.Println("It's time to stop all sub goroutines!")
+	log.Println("It's time to stop all sub goroutines!")
 	cancel()
 
 	//Just for test whether sub goroutines exit or not
 	time.Sleep(10 * time.Second)
+	log.Println("over")
 }
 
 func HandelRequest1(ctx context.Context) {
@@ -24,10 +25,10 @@ func HandelRequest1(ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
-			fmt.Println("HandelRequest Done.")
+			log.Println("HandelRequest Done.")
 			return
 		default:
-			fmt.Println("HandelRequest running")
+			log.Println("HandelRequest running")
 			time.Sleep(5 * time.Second)
 		}
 	}
@@ -37,10 +38,10 @@ func WriteRedis1(ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
-			fmt.Println("WriteRedis Done.")
+			log.Println("WriteRedis Done.")
 			return
 		default:
-			fmt.Println("WriteRedis running")
+			log.Println("WriteRedis running")
 			time.Sleep(5 * time.Second)
 		}
 	}
@@ -50,10 +51,10 @@ func WriteDatabase1(ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
-			fmt.Println("WriteDatabase Done.")
+			log.Println("WriteDatabase Done.")
 			return
 		default:
-			fmt.Println("WriteDatabase running")
+			log.Println("WriteDatabase running")
 			time.Sleep(5 * time.Second)
 		}
 	}

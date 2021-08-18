@@ -2,6 +2,7 @@ package main
 
 import(
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -11,11 +12,13 @@ func main(){
 	
 	// func1()
 
-	func2()
+	//func2()
 
 	// funcBufferedChan()
 	// funcBufferedChan2()
 
+	//子进程修改父进程数据
+	childModifyParentData()
 
 }
 
@@ -88,4 +91,14 @@ func loop(str string){
 
 	ch<- 0
 	
+}
+
+func childModifyParentData(){
+	name := "father"
+	go func() {
+		name = "child"
+	}()
+	time.Sleep(time.Second * 2)
+	log.Println(name)
+	log.Println("over")
 }
