@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"time"
+	"unsafe"
 )
 
 /**
@@ -10,8 +12,10 @@ import (
 通道是go里面goroutine之间相互通信的一个管道。类似pipe。
  */
 func main(){
+	//what is channel
+	whatIsChannel()
 	//创建
-	createNoBufferChan()
+	//createNoBufferChan()
 	//createBufferChan()
 
 	//关闭通道
@@ -146,4 +150,11 @@ func _singleWayRead(writeCh chan<- int, readCh <-chan int){
 	}
 	close(writeCh)
 }
+
+func whatIsChannel(){
+	ch := make(chan int)
+	fmt.Printf("ch size is :%d\r\n", unsafe.Sizeof(ch))
+	fmt.Printf("ch type is :%v\r\n", reflect.TypeOf(ch))
+}
+
 

@@ -2,8 +2,13 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"unsafe"
 )
+
+type user struct{
+	age int
+}
 
 /*
 map详解
@@ -12,10 +17,10 @@ func main(){
 	/*
 	1.声明&定义
 	 */
-	//定义方式1 使用map关键字，此方式未初始化，为nil map，不能用来存放键值对
+	//定义方式1 使用map关键字，此方式未初始化，为nil map，不能用来存放键值对，会panic(assignment to entry in nil map)
 	// var variable_name map[key_type]value_type
 
-	//定义方式2 使用make函数
+	//定义方式2 使用make函数，会被初始化
 	// var variable_name := make(map[key_type]value_type)
 
 	var countryCapitalMap = make(map[string]string)
@@ -61,4 +66,16 @@ func main(){
 	}
 	fmt.Printf("unsafe.sizeof(mapX)=%d\r\n", unsafe.Sizeof(mapY))
 
+	/*
+	6. map是引用类型吗
+	 */
+	var mapZ map[int]int
+	_referenceMap(mapZ)
+	//mapZ[1] = 1 //这样会panic，说明mapZ没有被初始化，也就不是引用类型
+	fmt.Println(reflect.TypeOf(mapZ), reflect.TypeOf(&user{}))
+}
+
+func _referenceMap(m map[int]int){
+	m2 := make(map[int]int, 3)
+	m = m2
 }
