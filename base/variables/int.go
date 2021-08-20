@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math"
 	"unsafe"
 )
@@ -27,7 +28,7 @@ func main(){
 	var big int32 = 123456
 	var small int8
 	small = int8(big)
-	fmt.Println(small, big)//64 123456 只会输出int8的最大值64，为啥不是127？？？
+	log.Println(small, big)//64 123456 只会输出int8的最大值64，为啥不是127？？？
 
 	var x int = 10
 	fmt.Printf("before changeX() func : x=%d, &x=%#x \r\n", x, &x)

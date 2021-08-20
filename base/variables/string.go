@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/thinkeridea/go-extend/exunicode/exutf8"
+	"log"
 	"reflect"
 	"unicode/utf8"
 	"unsafe"
@@ -10,6 +11,32 @@ import (
 
 /*GO中的字符串，默认使用的是UTF-8编码*/
 func main(){
+	//在golang中，字符的本质是一个int8的整数，也就是byte这个类型。这个整数表示的是这个字符对应的ASCII字符。范围为-2^7~2^7-1(-256~255)。
+	//我们回顾一下，26个字母表示的ASCII码范围。
+
+	//定义一个字符
+	var c byte = 'a'
+
+	//输出一个字符，会直接输出它对应的ASCII码
+	log.Println(c)//97
+
+	//格式化输出字符，才会输出它对应的值
+	log.Printf("%c", 169)//a
+
+	//一个byte是int8，只有一个字节大小，如果用中文(3/4个字节)会溢出，编译失败
+	//var z byte = '中'//constant 20013 overflows byte
+
+	//可以用一个int32或者int64来存放单个中文汉字，然后格式化输出
+	var zh int = '中'//注意是单引号哦，表示单个字符
+	log.Printf("%c", zh)//中
+
+	//再来说说字符串的定义
+	//使用双引号或者反引号
+	var s1,s2,s3 = "012", "allen", "严"
+	log.Printf("len(s1):%d, len(s2):%d, len(s3):%d", len(s1), len(s2), len(s3))
+	log.Printf("[]byte(s1):%v, []byte(s2):%v, []byte(s3):%v", []byte(s1), []byte(s2), []byte(s3))
+	log.Printf("[]rune(s1):%v, []rune(s2):%v, []rune(s3):%v", []rune(s1), []rune(s2), []rune(s3))
+
 	fmt.Println('a' - 'b')
 	name := "abc一"
 	by := []byte(name)
@@ -32,7 +59,7 @@ func main(){
 	fmt.Println(utf8.RuneCountInString("一二三四五六七八90"))//字符长度，输出10
 
 	/*2.字符串ASCII*/
-	theme := "我爱CD"
+	theme := "我爱CD😄"
 	for i:=0; i<len(theme); i++ {
 		//下标的方式可以直接获取到字符对应的ASCII
 		fmt.Printf("theme[%d]=%c %d\r\n", i, theme[i], theme[i])

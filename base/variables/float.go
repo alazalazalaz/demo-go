@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/shopspring/decimal"
+	"log"
+)
 
 func main(){
 	var num = 1.1
@@ -23,15 +27,9 @@ func main(){
 	//所以浮点数的除法得的结果类型是以左侧为准，左侧是常量则已右侧为准
 
 	println("------")
-	var num1 = float64(0.05)
-	var num2 = float64(1.05)
-
-	println(num1)
-	println(num1 * 100)
-	println(int(num1 * 100))
-
-	println(num2)
-	println(num2 * 100)
-	println(int(num2 * 100))
-
+	var num1 = 19.9
+	log.Println(num1 * 100) //等于1989.9999999999998
+	//采用decimal包解决
+	re, _ := decimal.NewFromFloat(num1).Mul(decimal.NewFromInt(100)).Float64()
+	log.Println(re)
 }
