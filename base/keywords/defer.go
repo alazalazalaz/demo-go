@@ -19,6 +19,10 @@ func main(){
 
 	//testParam()
 	fmt.Println(testReturn())
+
+	//测试多个defer
+	//结论，栈的方式执行defer，如果defer里面有recover，当遇到panic时，只有最顶部的defer才能recover到。
+	multiDefer()
 }
 
 /**
@@ -95,4 +99,31 @@ func getName(right bool)(name string){
 
 	panic("panic no name")
 	return "unknown"
+}
+
+func multiDefer(){
+	defer func() {
+		if err := recover(); err != nil{
+			log.Println("multiDefer recover()!")
+		}
+		log.Println("defer注册1")
+	}()
+	log.Println("func multiDefer()")
+	multiDefer2()
+}
+
+func multiDefer2(){
+	defer func() {
+		if err := recover(); err != nil{
+			log.Println("multiDefer2 recover()!")
+		}
+		log.Println("defer注册2")
+	}()
+	log.Println("func multiDefer2()")
+
+	multiDeferPanic()
+}
+
+func multiDeferPanic(){
+	panic("test panic")
 }

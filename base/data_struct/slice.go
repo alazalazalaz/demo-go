@@ -47,28 +47,28 @@ func main(){
 	 */
 	//append()和copy()函数
 	var slice [] int
-	log(slice)
+	logg(slice)
 
 	//追加切片
 	slice = append(slice, 0)
-	log(slice)
+	logg(slice)
 	slice = append(slice, 5, 100, 7)
-	log(slice)
+	logg(slice)
 
 	//创建slice1为slice的两倍容量
 	slice1 := make([]int, len(slice), cap(slice) * 2)
-	log(slice1)
+	logg(slice1)
 	//拷贝slice的内容到slice1，和linux的cp命令相反
 	copy(slice1, slice)
-	log(slice)
-	log(slice1)
+	logg(slice)
+	logg(slice1)
 
 	//类似array_merge方法
 	var array1 = []int {1, 2}
 	var array2 = []int {3, 4}
 
 	arrayMerge := append(array1, array2...)
-	log(arrayMerge)
+	logg(arrayMerge)
 
 	/*
 	5.切片删除
@@ -110,6 +110,15 @@ func main(){
 	fmt.Printf("before sliceX=%v, &sliceX=%p \r\n", sliceX, &sliceX)
 	changeSliceX(sliceX)
 	fmt.Printf("after sliceX=%v, &sliceX=%p \r\n\r\n", sliceX, &sliceX)
+
+	/**
+	8、append是否会影响slice，结论是不会哦
+	 */
+	var sliceY = []int{100,200}
+	fmt.Printf("before changeSliceByAppend() siliceY=%v\n", sliceY)
+	sliceYY := changeSliceByAppend(sliceY)
+	fmt.Printf("after changeSliceByAppend() siliceY=%v, sliceYY=%v\n", sliceY, sliceYY)
+
 }
 
 func changeArrX(arrX [3]int){
@@ -125,8 +134,12 @@ func changeSliceX(sliceX []int){
 }
 
 
-func log(slice []int){
-	fmt.Printf("log: %d \n", slice)
+func logg(slice []int){
+	fmt.Printf("logg: %d \n", slice)
 }
 
-
+func changeSliceByAppend(sliceY []int) []int{
+	sliceY = append(sliceY, 300)
+	sliceY = append(sliceY, 400)
+	return sliceY
+}
