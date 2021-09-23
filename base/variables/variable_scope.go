@@ -1,14 +1,26 @@
-package main 
+package main
+
 import "fmt"
 
-var g, g2 int = 100, 100
-
 func main(){
-	//局部变量和全局变量可以重名，但是会优先取局部变量
-	var a, g int
+	book1 := NewBook()
+	fmt.Printf("book1=%v, &book1=%v\n", &book1, book1)
 
-	a = 20
-	g = 20
+	book1.Author = "wang"
 
-	fmt.Println(a, g, g2)
+	book2 := NewBook()
+	fmt.Printf("book2=%v, &book2=%v\n", &book2, book2)
+
+}
+
+type books struct {
+	Id int
+	Author string
+}
+
+func NewBook() *books{
+	return &books{
+		Id:1,
+		Author: "xiaozhang",
+	}
 }

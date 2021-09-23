@@ -32,10 +32,13 @@ func main(){
 
 	//再来说说字符串的定义
 	//使用双引号或者反引号
-	var s1,s2,s3 = "012", "allen", "严"
+	var s1,s2,s3 = "1", "allen", "一"
 	log.Printf("len(s1):%d, len(s2):%d, len(s3):%d", len(s1), len(s2), len(s3))
 	log.Printf("[]byte(s1):%v, []byte(s2):%v, []byte(s3):%v", []byte(s1), []byte(s2), []byte(s3))
 	log.Printf("[]rune(s1):%v, []rune(s2):%v, []rune(s3):%v", []rune(s1), []rune(s2), []rune(s3))
+
+	var yi = "一"
+	log.Printf("bytes:%v, rune:%v", []byte(yi), []rune(yi))
 
 	fmt.Println('a' - 'b')
 	name := "abc一"
@@ -57,6 +60,7 @@ func main(){
 	fmt.Println(len("abcd123490"), len("一二三四五六七八90"))//字节长度，输出10 26
 
 	fmt.Println(utf8.RuneCountInString("一二三四五六七八90"))//字符长度，输出10
+	fmt.Println(len([]rune("一二三四五六七八90")))//输出10
 
 	/*2.字符串ASCII*/
 	theme := "我爱CD😄"
@@ -65,9 +69,12 @@ func main(){
 		fmt.Printf("theme[%d]=%c %d\r\n", i, theme[i], theme[i])
 	}
 
+	a := []rune(theme)
+	for _, s := range a{
+		fmt.Printf("unicode: %c %d \r\n", s, s)
+	}
 
 	for _, s := range theme{
-		//使用unicode方式输出正常中文字符
 		fmt.Printf("unicode: %c %d \r\n", s, s)
 	}
 
