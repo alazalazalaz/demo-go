@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	_ "net/http/pprof"
+	"path"
 	"time"
 )
 
@@ -28,6 +29,7 @@ func testPprof(){
 	for range tick {
 		buf = append(buf, make([]byte, 1024*1024)...)
 	}
+	path.Join()
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request){

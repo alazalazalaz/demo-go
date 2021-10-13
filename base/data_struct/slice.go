@@ -20,7 +20,6 @@ func main(){
 	//方法2，通过数组赋值
 	var array = [4]int {1, 2, 3, 4}
 	var emptyArray []int //已声明，但未初始化定义
-
 	/*
 	2.切片截取
 	 */
@@ -78,6 +77,12 @@ func main(){
 	a = a[1:]
 	//删除最后一个元素
 	a = a[:len(a) - 1]
+	//删除第n个元素(len(slice)>=n>=0)
+	b := []int{1, 2, 3}
+	fmt.Printf("len(b)=%d\r\n", len(b))
+	b1 := b[:3]
+	b1 = append(b1, b[3:]...)
+	fmt.Printf("delete b1 : %v\r\n", b1)
 
 	//切片是引用类型
 	var abc = []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -106,7 +111,7 @@ func main(){
 	changeArrX(arrX)
 	fmt.Printf("after arrX=%v, &arrX=%p \r\n\r\n", arrX, &arrX)
 
-	var sliceX = []int{5, 6}
+	var sliceX = []int{1, 2}
 	fmt.Printf("before sliceX=%v, &sliceX=%p \r\n", sliceX, &sliceX)
 	changeSliceX(sliceX)
 	fmt.Printf("after sliceX=%v, &sliceX=%p \r\n\r\n", sliceX, &sliceX)
@@ -119,6 +124,13 @@ func main(){
 	sliceYY := changeSliceByAppend(sliceY)
 	fmt.Printf("after changeSliceByAppend() siliceY=%v, sliceYY=%v\n", sliceY, sliceYY)
 
+	/**
+	9、切片遍历
+	 */
+	sliceZ := [...]int{1, 2, 3, 4}
+	for i, s := range sliceZ{
+		fmt.Printf("i=>s , %d=> %d\n", i, s)
+	}
 }
 
 func changeArrX(arrX [3]int){
@@ -129,8 +141,9 @@ func changeArrX(arrX [3]int){
 
 func changeSliceX(sliceX []int){
 	sliceX[0] = 100
-	sliceX[1] = 200
-	fmt.Printf("inner sliceX=%v, &sliceX=%p \r\n", sliceX, &sliceX)
+	sliceY := sliceX[:]
+	sliceY[1] = 200
+	fmt.Printf("inner sliceX=%v, &sliceX=%p , sliceY=%v \r\n", sliceX, &sliceX, sliceY)
 }
 
 

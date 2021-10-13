@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 	"time"
 	"unsafe"
@@ -13,13 +14,13 @@ import (
  */
 func main(){
 	//what is channel
-	whatIsChannel()
+	//whatIsChannel()
 	//创建
 	//createNoBufferChan()
 	//createBufferChan()
 
 	//关闭通道
-	//closeChan()
+	closeChan()
 	//
 	////读取通道
 	//readChan()
@@ -42,14 +43,15 @@ func createNoBufferChan(){
 	c1 := make(chan int)
 
 	go func(c1 chan int) {//如果没有子协程去接受c1(也就是说如果没有这个goroutine)，那么主协程发送后会panic of deadlock
-		//sleep 1s 让协程跑起来
-		time.Sleep(time.Second)
-		result1 := <-c1
-		fmt.Println("createNoBufferChan接受result1=", result1)
+		time.Sleep(time.Second * 2)
+		c1Result := <-c1
+		fmt.Println("createNoBufferChan 接受c1=", c1Result)
 	}(c1)
 
-	c1<-1	//主协程发完就立即执行后面的语句，不会阻塞哦
-	fmt.Println("createNoBufferChan over")
+	c1<-1	//因为是no buffer，所以发送的时候会阻塞，直到接收方准备好接收。
+	fmt.Println("createNoBufferChan 写入c1完成")
+	time.Sleep(time.Second * 2)
+	fmt.Println("createNoBufferChan end")
 }
 
 /**
@@ -66,16 +68,18 @@ func createBufferChan(){
 	//
 	//}(ch)
 
-	fmt.Println("createBufferChan", <-ch)
+	//fmt.Println("createBufferChan", <-ch)
+	log.Println("end")
 }
 
 func closeChan(){
 	ch := make(chan int, 1)
 	ch<-1
 	fmt.Println("closeChan", <-ch)
-	fmt.Println("closeChan before ch:", ch)
 	close(ch)
-	fmt.Println("closeChan after ch:", ch)
+	fmt.Println("read a closed chan", <-ch)//继续读取一个已关闭的chan，如果里面有值会返回值，返回完后继续读取会返回该类型的空值，此处返回0
+	//ch<-2 // 继续往一个已关闭的chan写入，会导致panic
+	//close(ch) // 再次关闭一个已关闭的chan会panic
 }
 
 /**
