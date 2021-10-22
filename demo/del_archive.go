@@ -33,7 +33,8 @@ func delete(userId int){
 	}
 	defer f.Close()
 
-	searchUrl := "https://cproxyapi.tgs.tap4fun.com/archive/history"
+	// cproxy url
+	searchUrl := "https://xxx"
 	characterId := strconv.Itoa(userId)
 	pageNum := 1
 	pageSize := 100
