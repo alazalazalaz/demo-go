@@ -20,10 +20,10 @@ func main(){
 	//createBufferChan()
 
 	//关闭通道
-	closeChan()
+	//closeChan()
 	//
 	////读取通道
-	//readChan()
+	readChan()
 	//
 	////单向通道
 	//singleWayChan()

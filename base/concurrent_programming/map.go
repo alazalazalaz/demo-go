@@ -21,39 +21,39 @@ var map3 sync.Map
 func main(){
 	//如何保证一个全局变量map的key，只会被写入一次？
 	//方法1：常规的单例，会有并发问题,concurrent map writes
-	storeMapFunc1()
-
-	//方法2：使用map+mutex
-	//结论：不会有并发问题，
-	storeMapFunc2()
+	//storeMapFunc1()
+	//
+	////方法2：使用map+mutex
+	////结论：不会有并发问题，
+	//storeMapFunc2()
 
 	//方法2：使用sync.map
 	storeMapFunc3()
 }
 
 func storeMapFunc1(){
-	//map1 = make(map[string]string)
-	//key := "A"
-	//num := 10
-	//
-	//for i:= 0; i<num; i++{
-	//	go func() {
-	//		v := getV1(key, fmt.Sprintf("v%d", i))
-	//		fmt.Println(v)
-	//	}()
-	//}
-	//time.Sleep(time.Second * 2)
-	//fmt.Println(getV1(key, "over"))
+	map1 = make(map[string]string)
+	key := "A"
+	num := 10
+
+	for i:= 0; i<num; i++{
+		go func() {
+			v := getV1(key, fmt.Sprintf("v%d", i))
+			fmt.Println(v)
+		}()
+	}
+	time.Sleep(time.Second * 2)
+	fmt.Println(getV1(key, "over"))
 }
 
-//func getV1(key string, value string) string{
-//	if v, isExist := map1[key]; isExist {
-//		return v
-//	}
-//
-//	map1[key] = value//这里会报panic =》 concurrent map writes
-//	return map1[key]
-//}
+func getV1(key string, value string) string{
+	if v, isExist := map1[key]; isExist {
+		return v
+	}
+
+	map1[key] = value//这里会报panic =》 concurrent map writes
+	return map1[key]
+}
 
 func storeMapFunc2(){
 	map2 = make(map[string]string)

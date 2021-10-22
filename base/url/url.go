@@ -1,8 +1,6 @@
 package main
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"fmt"
 	"log"
 	url2 "net/url"
@@ -38,12 +36,6 @@ func main(){
 	fmt.Println(autoImplodeQuery(url, "sex", "male"))
 
 	urlParse()
-
-	bodyBytes := []byte("abc")
-	h := md5.New()
-	h.Write(bodyBytes)
-	md5Bytes := h.Sum(nil)
-	log.Printf("Md5:%v\n", hex.EncodeToString(md5Bytes), string(md5Bytes))
 }
 
 func urlParse(){
