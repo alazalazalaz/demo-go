@@ -12,14 +12,14 @@ const maxIndex = math.MaxInt8 / 2
 
 type myFuncHandle func(ctx *myContext)
 type myContext struct{
-	routeArray []myFuncHandle
-	index int8
+	handleChains []myFuncHandle
+	index        int8
 }
 
 func (m *myContext) next(){
 	if m.index < maxIndex{
 		m.index++
-		m.routeArray[m.index](m)
+		m.handleChains[m.index](m)
 	}
 }
 
@@ -29,28 +29,28 @@ func (m *myContext) abort(){
 }
 
 func (m *myContext) use(f myFuncHandle){
-	m.routeArray = append(m.routeArray, f)
+	m.handleChains = append(m.handleChains, f)
 }
 
 func (m *myContext) get(uri string, f myFuncHandle){
-	m.routeArray = append(m.routeArray, f)
+	m.handleChains = append(m.handleChains, f)
 }
 
 func (m *myContext) run(){
-	m.routeArray[0](m)
+	m.handleChains[0](m)
 }
 
 func main(){
 	ctx := &myContext{}
 	ctx.use(m1)
 	ctx.use(m2)
-	ctx.get("hahahah", getF)
+	ctx.get("hahahah", mainFunc)
 	ctx.run()
 }
 
 func m1(ctx *myContext){
 	fmt.Println("im m1 begin")
-	ctx.abort()
+	//ctx.abort()
 	ctx.next()
 	fmt.Println("im m1 end")
 }
@@ -61,7 +61,7 @@ func m2(ctx *myContext){
 	fmt.Println("im m2 end")
 }
 
-func getF(ctx *myContext){
+func mainFunc(ctx *myContext){
 	fmt.Println("im get function")
 }
 

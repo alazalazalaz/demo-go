@@ -3,6 +3,7 @@ package main
 import(
 	"fmt"
 	"log"
+	"runtime"
 	"time"
 )
 
@@ -18,7 +19,10 @@ func main(){
 	// funcBufferedChan2()
 
 	//子进程修改父进程数据
-	childModifyParentData()
+	//childModifyParentData()
+
+	//打印协程数量
+	printGoNum()
 
 }
 
@@ -101,4 +105,21 @@ func childModifyParentData(){
 	time.Sleep(time.Second * 2)
 	log.Println(name)
 	log.Println("over")
+}
+
+func printGoNum(){
+	goroutineNum := runtime.NumGoroutine()
+	log.Printf("goroutineNum:%d", goroutineNum)// 1
+	go func() {
+		log.Println("im child")
+		time.Sleep(time.Second * 2)
+	}()
+	time.Sleep(time.Second * 1)
+	goroutineNum2 := runtime.NumGoroutine()
+	log.Printf("goroutineNum2:%d", goroutineNum2)// 2
+
+	time.Sleep(time.Second * 3)
+	goroutineNum3 := runtime.NumGoroutine()
+	log.Printf("goroutineNum3:%d", goroutineNum3)// 1
+
 }
