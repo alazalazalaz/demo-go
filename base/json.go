@@ -1,8 +1,9 @@
-package main 
+package main
 
-import(
-	"fmt"
+import (
 	"encoding/json"
+	"fmt"
+	"log"
 )
 
 type Test struct{
@@ -26,13 +27,20 @@ func main(){
 		jsonDecode(baseString, i)
 	}
 
-	// fmt.Println(dog, cat, bird)
+	// 测试 json unmarshal 第一个参数为空，是否会报错
+	testJsonUnmarshal()
+
+	// 测试interface{}的解析
+	testInterface()
 
 }
 
 
-func jsonEncode(){
-
+func testJsonUnmarshal(){
+	s := ``// s为空，还真会报错
+	animal := &Animal{}
+	err := json.Unmarshal([]byte(s), animal)
+	fmt.Println(err) //unexpected end of JSON input
 }
 
 func jsonDecode(baseString []byte, i int){
@@ -45,4 +53,18 @@ func jsonDecode(baseString []byte, i int){
 	}
 	
 	fmt.Println(ani)
+}
+
+type message struct {
+	Extension map[string]interface{}
+}
+
+func testInterface(){
+	ss := `{}`
+	data := &message{}
+	if err := json.Unmarshal([]byte(ss), data); err != nil {
+		log.Fatalln(err)
+	}
+
+	log.Fatalln(data)
 }
