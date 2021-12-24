@@ -23,10 +23,13 @@ func main(){
 	//closeChan()
 	//
 	////读取通道
-	readChan()
+	//readChan()
 	//
 	////单向通道
 	//singleWayChan()
+
+	//chan做定时器和sleep的区别
+	sleepOrTimerTicker()
 
 }
 
@@ -162,3 +165,28 @@ func whatIsChannel(){
 }
 
 
+func sleepOrTimerTicker(){
+	//testSleep()
+	testTicker()
+	log.Println("sleepOrTimerTicker over")
+}
+
+func testSleep(){
+	log.Println("testSleep begin")
+	for i := 0; i < 3; i++ {
+		log.Printf("testSleep for i=%d \r\n", i)
+		time.Sleep(time.Second * 5)
+		log.Printf("testSleep for i=%d sleep over\r\n", i)
+	}
+}
+
+func testTicker(){
+	t := time.NewTicker(time.Second * 1)
+	i := 0
+	for range t.C{
+		i++
+		log.Printf("testTicker for i=%d \r\n", i)
+		time.Sleep(time.Second * 5)
+		log.Printf("testTicker for i=%d sleep over\r\n", i)
+	}
+}

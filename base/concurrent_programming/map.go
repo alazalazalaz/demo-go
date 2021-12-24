@@ -15,6 +15,7 @@ var mutex2 sync.Mutex
 var rmutex2 sync.RWMutex
 
 var map3 sync.Map
+var map3Lock sync.Mutex
 
 
 //sync.map
@@ -103,20 +104,25 @@ func getV2ByReadMutex(key string, value string) string{
 	return map2[key]
 }
 
+//!!!惊天大问题1，此方法中i会被协程读取到10！！！理论上只期望协程读到0-9.
+//问题2，如果不加lock的话，这10次打印中，每次可能不一样。
 func storeMapFunc3(){
 	key := "C"
 	num := 10
 
 	for i:= 0; i<num; i++{
+		//j := i
 		go func() {
-			v := getV3(key, fmt.Sprintf("v%d", i))
+			v := getV3(key, fmt.Sprintf("i=%d", i))
 			fmt.Printf("%s-%s\r\n", key, v)
 		}()
 	}
-	time.Sleep(time.Second * 2)
+	time.Sleep(time.Second * 1)
 }
 
 func getV3(key string, value string) string{
+	map3Lock.Lock()
+	defer map3Lock.Unlock()
 	if v, isExist := map3.Load(key); isExist {
 		return v.(string)
 	}
