@@ -19,6 +19,7 @@ func main(){
 
 
 	r.GET("/user/:name", routeUser)
+	r.GET("/test", routeGetTest)
 	r.POST("/test", routePostTest)
 	r.Run(":8080")
 }
@@ -47,6 +48,10 @@ func routeAge(c *gin.Context){
 
 	fmt.Println(pw, nick)
 	c.JSON(200, gin.H{"message":age})
+}
+
+func routeGetTest(c *gin.Context){
+	c.JSON(200, gin.H{"message": "GET GET GET"})
 }
 
 func routePostTest(c *gin.Context){
