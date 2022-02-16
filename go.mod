@@ -24,8 +24,10 @@ require (
 	github.com/thinkeridea/go-extend v1.3.2
 	github.com/yuin/goldmark v1.4.0
 	golang.org/x/image v0.0.0-20210628002857-a66eb6448b8d // indirect
-	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
-	google.golang.org/grpc v1.37.0
-	google.golang.org/protobuf v1.26.0
+	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420
+	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
+	google.golang.org/api v0.67.0
+	google.golang.org/grpc v1.40.1
+	google.golang.org/protobuf v1.27.1
 	gopkg.in/Shopify/sarama.v1 v1.20.1
 )
