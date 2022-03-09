@@ -19,4 +19,26 @@ func main() {
 	//c := new([]int) 这样会报错哟
 	//c[1] = 10 // ./main.go:11:3: invalid operation: c[1] (type *[]int does not support indexing)
 
+	data := Data{
+		Id: 1,
+	}
+
+	fmt.Println(data.Info.Age)
+	fmt.Println(data.InfoP.Age)
+
+	dataP := &Data{
+		Id: 2,
+	}
+	fmt.Println(dataP.Info.Name)
+}
+
+type Data struct {
+	Id    int
+	Info  Info
+	InfoP *Info
+}
+
+type Info struct {
+	Age  int
+	Name string
 }

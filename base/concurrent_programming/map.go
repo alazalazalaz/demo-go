@@ -17,9 +17,8 @@ var rmutex2 sync.RWMutex
 var map3 sync.Map
 var map3Lock sync.Mutex
 
-
 //sync.map
-func main(){
+func main() {
 	//如何保证一个全局变量map的key，只会被写入一次？
 	//方法1：常规的单例，会有并发问题,concurrent map writes
 	//storeMapFunc1()
@@ -32,12 +31,12 @@ func main(){
 	storeMapFunc3()
 }
 
-func storeMapFunc1(){
+func storeMapFunc1() {
 	map1 = make(map[string]string)
 	key := "A"
 	num := 10
 
-	for i:= 0; i<num; i++{
+	for i := 0; i < num; i++ {
 		go func() {
 			v := getV1(key, fmt.Sprintf("v%d", i))
 			fmt.Println(v)
@@ -47,21 +46,21 @@ func storeMapFunc1(){
 	fmt.Println(getV1(key, "over"))
 }
 
-func getV1(key string, value string) string{
+func getV1(key string, value string) string {
 	if v, isExist := map1[key]; isExist {
 		return v
 	}
 
-	map1[key] = value//这里会报panic =》 concurrent map writes
+	map1[key] = value //这里会报panic =》 concurrent map writes
 	return map1[key]
 }
 
-func storeMapFunc2(){
+func storeMapFunc2() {
 	map2 = make(map[string]string)
 	key := "B"
 	num := 10
 
-	for i:= 0; i<num; i++{
+	for i := 0; i < num; i++ {
 		go func() {
 			v := getV2(key, fmt.Sprintf("v%d", i))
 			fmt.Println(v)
@@ -71,7 +70,7 @@ func storeMapFunc2(){
 	fmt.Println(getV2(key, "over"))
 }
 
-func getV2(key string, value string) string{
+func getV2(key string, value string) string {
 	if v, isExist := map2[key]; isExist {
 		return v
 	}
@@ -89,7 +88,7 @@ func getV2(key string, value string) string{
 	return map2[key]
 }
 
-func getV2ByReadMutex(key string, value string) string{
+func getV2ByReadMutex(key string, value string) string {
 	rmutex2.RLock()
 	defer rmutex2.RUnlock()
 
@@ -106,11 +105,11 @@ func getV2ByReadMutex(key string, value string) string{
 
 //!!!惊天大问题1，此方法中i会被协程读取到10！！！理论上只期望协程读到0-9.
 //问题2，如果不加lock的话，这10次打印中，每次可能不一样。
-func storeMapFunc3(){
+func storeMapFunc3() {
 	key := "C"
 	num := 10
 
-	for i:= 0; i<num; i++{
+	for i := 0; i < num; i++ {
 		//j := i
 		go func() {
 			v := getV3(key, fmt.Sprintf("i=%d", i))
@@ -120,7 +119,7 @@ func storeMapFunc3(){
 	time.Sleep(time.Second * 1)
 }
 
-func getV3(key string, value string) string{
+func getV3(key string, value string) string {
 	map3Lock.Lock()
 	defer map3Lock.Unlock()
 	if v, isExist := map3.Load(key); isExist {
