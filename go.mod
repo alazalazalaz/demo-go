@@ -23,6 +23,7 @@ require (
 	github.com/shopspring/decimal v1.2.0
 	github.com/thinkeridea/go-extend v1.3.2
 	github.com/yuin/goldmark v1.4.0
+	github.com/yuin/gopher-lua v0.0.0-20210529063254-f4c35e4016d9
 	golang.org/x/image v0.0.0-20210628002857-a66eb6448b8d // indirect
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
