@@ -1,10 +1,11 @@
-package main 
+package main
+
 import "fmt"
 
 func main() {
 	a := 1
-	switch a{
-	case 1:
+	switch a {
+	case 3, 1:
 		fmt.Printf("1\n")
 	case 10:
 		fmt.Printf("2\n")
@@ -13,7 +14,6 @@ func main() {
 	default:
 		fmt.Printf("none\n")
 	}
-
 
 	marks := "A"
 	switch {
@@ -25,5 +25,3 @@ func main() {
 		fmt.Printf("others\n")
 	}
 }
-
-

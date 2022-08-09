@@ -9,25 +9,31 @@ import (
 slice切片是对数组的抽象
 Go 数组的长度不可改变，所以有局限性，就出现了一个长度可以分配的"动态数组"，也就是切片
 */
-func main(){
+func main() {
+	aaa := make([]int, 3, 6)
+	fmt.Println(aaa)
+	aaa = append(aaa, 99)
+	fmt.Println(aaa)
+	aaaApend(aaa)
+	fmt.Println(aaa)
 	/*
-	1.定义
+		1.定义
 	*/
 	//方法1，make函数(类型，长度，容量)
 	// make([]type, length, capacity)
 	var numbers = make([]int, 3, 5)
 
 	//方法2，通过数组赋值
-	var array = [4]int {1, 2, 3, 4}
+	var array = [4]int{1, 2, 3, 4}
 	var emptyArray []int //已声明，但未初始化定义
 	/*
-	2.切片截取
-	 */
+		2.切片截取
+	*/
 	//从startIndex到endIndex-1取值(左闭右开)
 	// s := arr[startIndex:endIndex]
-	s1 := array[:] //所有
-	s2 := array[:2]//下标0开始到1，不含下标2
-	s3 := array[2:]//下标2到最后
+	s1 := array[:]  //所有
+	s2 := array[:2] //下标0开始到1，不含下标2
+	s3 := array[2:] //下标2到最后
 
 	fmt.Printf("emptyArray len=%d, cap=%d\n", len(emptyArray), cap(emptyArray))
 	fmt.Printf("number len=%d, cap=%d\n", len(numbers), cap(numbers))
@@ -37,15 +43,15 @@ func main(){
 	fmt.Printf("s[2:] = %v\n", s3)
 
 	/*
-	3.切片判空
-	 */
+		3.切片判空
+	*/
 	//numbers == nil
 
 	/*
-	4.切片拷贝&追加
-	 */
+		4.切片拷贝&追加
+	*/
 	//append()和copy()函数
-	var slice [] int
+	var slice []int
 	logg(slice)
 
 	//追加切片
@@ -55,7 +61,7 @@ func main(){
 	logg(slice)
 
 	//创建slice1为slice的两倍容量
-	slice1 := make([]int, len(slice), cap(slice) * 2)
+	slice1 := make([]int, len(slice), cap(slice)*2)
 	logg(slice1)
 	//拷贝slice的内容到slice1，和linux的cp命令相反
 	copy(slice1, slice)
@@ -63,20 +69,20 @@ func main(){
 	logg(slice1)
 
 	//类似array_merge方法
-	var array1 = []int {1, 2}
-	var array2 = []int {3, 4}
+	var array1 = []int{1, 2}
+	var array2 = []int{3, 4}
 
 	arrayMerge := append(array1, array2...)
 	logg(arrayMerge)
 
 	/*
-	5.切片删除
-	 */
+		5.切片删除
+	*/
 	a := []int{1, 2, 3}
 	//删除第一个元素
 	a = a[1:]
 	//删除最后一个元素
-	a = a[:len(a) - 1]
+	a = a[:len(a)-1]
 	//删除第n个元素(len(slice)>=n>=0)
 	b := []int{1, 2, 3}
 	fmt.Printf("len(b)=%d\r\n", len(b))
@@ -88,23 +94,23 @@ func main(){
 	var abc = []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	ss1 := abc[:4]
 	ss2 := abc[3:7]
-	fmt.Println(ss1)//[1 2 3 4]
-	fmt.Println(ss2)//[4 5 6 7]
+	fmt.Println(ss1) //[1 2 3 4]
+	fmt.Println(ss2) //[4 5 6 7]
 	ss1[3] = 100
-	fmt.Println(ss1)//[1 2 3 100]
-	fmt.Println(ss2)//[100 5 6 7]
-	fmt.Println(abc)//[1 2 3 100 5 6 7 8 9]
+	fmt.Println(ss1) //[1 2 3 100]
+	fmt.Println(ss2) //[100 5 6 7]
+	fmt.Println(abc) //[1 2 3 100 5 6 7 8 9]
 
 	/*
-	6. 切片大小
+		6. 切片大小
 	*/
 	var arr = [5]int{1, 2}
-	fmt.Printf("intArray size:%d\r\n", unsafe.Sizeof(arr))//5*8=40字节
+	fmt.Printf("intArray size:%d\r\n", unsafe.Sizeof(arr)) //5*8=40字节
 	sliX := []int{1, 2, 3, 4}
-	fmt.Printf("sliX size:%d\r\n", unsafe.Sizeof(sliX))//始终是24
+	fmt.Printf("sliX size:%d\r\n", unsafe.Sizeof(sliX)) //始终是24
 
 	/*
-	7、数组和切片在函数内外修改的影响
+		7、数组和切片在函数内外修改的影响
 	*/
 	var arrX = [3]int{5, 6}
 	fmt.Printf("before arrX=%v, &arrX=%p \r\n", arrX, &arrX)
@@ -118,41 +124,46 @@ func main(){
 
 	/**
 	8、append是否会影响slice，结论是不会哦
-	 */
-	var sliceY = []int{100,200}
+	*/
+	var sliceY = []int{100, 200}
 	fmt.Printf("before changeSliceByAppend() siliceY=%v\n", sliceY)
 	sliceYY := changeSliceByAppend(sliceY)
 	fmt.Printf("after changeSliceByAppend() siliceY=%v, sliceYY=%v\n", sliceY, sliceYY)
 
 	/**
 	9、切片遍历
-	 */
+	*/
 	sliceZ := [...]int{1, 2, 3, 4}
-	for i, s := range sliceZ{
+	for i, s := range sliceZ {
 		fmt.Printf("i=>s , %d=> %d\n", i, s)
 	}
 }
 
-func changeArrX(arrX [3]int){
+func changeArrX(arrX [3]int) {
 	arrX[0] = 100
 	arrX[1] = 200
 	fmt.Printf("inner arrX=%v, &arrX=%p \r\n", arrX, &arrX)
 }
 
-func changeSliceX(sliceX []int){
+func changeSliceX(sliceX []int) {
 	sliceX[0] = 100
 	sliceY := sliceX[:]
 	sliceY[1] = 200
 	fmt.Printf("inner sliceX=%v, &sliceX=%p , sliceY=%v \r\n", sliceX, &sliceX, sliceY)
 }
 
-
-func logg(slice []int){
+func logg(slice []int) {
 	fmt.Printf("logg: %d \n", slice)
 }
 
-func changeSliceByAppend(sliceY []int) []int{
+func changeSliceByAppend(sliceY []int) []int {
 	sliceY = append(sliceY, 300)
 	sliceY = append(sliceY, 400)
 	return sliceY
+}
+
+func aaaApend(aaa []int) {
+	aaa[0] = 1
+	aaa = append(aaa, 5)
+	fmt.Println(aaa)
 }
