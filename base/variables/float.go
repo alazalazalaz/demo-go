@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"github.com/shopspring/decimal"
 	"log"
+	"math"
 )
 
 func main() {
 
 	int64ToFloat64()
+	float64ToString()
 
 	return
 	var num = 1.1
@@ -43,4 +45,17 @@ func int64ToFloat64() {
 	fmt.Println(float64(a))
 	fmt.Println(float64(a / 100)) //精度丢失，等于0
 	fmt.Println(float64(a) / 100) //等于0.01
+}
+
+func float64ToString() {
+	fmt.Println("float64ToString")
+	var a float64 = 0.1234
+	fmt.Printf("%0.0f\n", a) // 0, 不含小数点和小数
+	fmt.Printf("%0.2f\n", a) // 0.12, 含小数点和小数
+
+	var newPrice float64 = 0.1234
+	newPrice = math.Ceil(newPrice)
+	fmt.Printf("%0.0f\n", newPrice) // 0, 不含小数点和小数
+	fmt.Printf("%0.2f\n", newPrice) // 0.12, 含小数点和小数
+
 }

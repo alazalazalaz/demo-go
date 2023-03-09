@@ -19,7 +19,7 @@ func main() {
 
 	//字符串转时间戳
 	s1 := "2022-06-09 07:49:13"
-	loc, err := time.LoadLocation("Local")
+	loc, err := time.LoadLocation("UTC")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -31,4 +31,9 @@ func main() {
 	}
 
 	fmt.Println(theTime.Unix())
+
+	//时间戳转字符串
+	fmt.Println(time.Unix(1668737916, 0).Format(time.RFC3339))
+	fmt.Println(time.Unix(1668737916, 0).Format("2006-01-02 15:04:05"))
+	fmt.Println(time.Unix(1668737916, 0).Local())
 }

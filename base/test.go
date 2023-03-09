@@ -8,11 +8,36 @@ import (
 )
 
 func main() {
-	log.Println(IsVailedIp("101.24.90.164"))
+	//log.Println(IsVailedIp("101.24.90.164"))
+	//pointtest()
+
+	fmt.Println(strings.SplitN("aa:bb:cc", ":", 2)[0])
+}
+
+func ParseUser(user string) (usertype, username string) {
+	tmp := strings.SplitN(user, ":", 2)
+	if len(tmp) != 2 {
+		return
+	}
+	usertype, username = tmp[0], tmp[1]
+	return
 }
 
 type exchange struct {
 	Rates map[string]float64 `json:"rates"`
+}
+
+type AggregateChannelExtInfo struct {
+	Currency string `json:"currency"`
+	Amount   int64  `json:"amount"`
+}
+
+func pointtest() {
+	channelExtInfoObj := &AggregateChannelExtInfo{}
+	channelExtInfoObj.Amount = 333
+	fmt.Println(channelExtInfoObj)
+	data, _ := json.Marshal(channelExtInfoObj)
+	fmt.Println(string(data))
 }
 
 func IsVailedIp(ip string) bool {

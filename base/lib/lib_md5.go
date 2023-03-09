@@ -4,21 +4,26 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"log"
+	"time"
 )
 
-type body2 struct{
+type body2 struct {
 	OrderId string `json:"order_id"`
 }
 
-func main(){
+func main() {
+	tempSign()
+
 	bodyBytes := []byte("abc")
 	bodyNumBytes := []byte("123")
 
 	m := md5.New()
 	m.Write(bodyBytes)
 	configMd5Str := hex.EncodeToString(m.Sum(nil))
-	m.Write(bodyNumBytes)//再次调用m.Write()相当于追加字符串，也就是 cacheMd5Str 会等于md5("abc123")
+
+	m.Write(bodyNumBytes) //再次调用m.Write()相当于追加字符串，也就是 cacheMd5Str 会等于md5("abc123")
 	cacheMd5Str := hex.EncodeToString(m.Sum(nil))
 	log.Printf("Md5:%v\n %v\n", configMd5Str, cacheMd5Str)
 
@@ -34,5 +39,17 @@ func main(){
 
 	jsonBytes, err := json.Marshal(order)
 	log.Println(order, jsonBytes, err) //&{1} [123 34 79 114 100 101 114 73 100 34 58 34 49 34 125] <nil>
-	log.Println(string(jsonBytes)) //{"OrderId":"1"}
+	log.Println(string(jsonBytes))     //{"OrderId":"1"}
+}
+
+func tempSign() {
+	gameId := "ba"
+	timestamp := time.Now().Unix() - 86400*2
+	ServerToServerSampleVerifyToken := "IENX!LIU838HFD"
+
+	m := md5.New()
+	m.Write([]byte(gameId + fmt.Sprintf("%d", timestamp) + ServerToServerSampleVerifyToken))
+	newSign := hex.EncodeToString(m.Sum(nil))
+
+	fmt.Println(timestamp, newSign)
 }

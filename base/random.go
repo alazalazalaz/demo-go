@@ -9,16 +9,25 @@ import (
 func main() {
 
 	// 通过new source防止种子交叉覆盖
-	testSeedWithNew()
+	//testSeedWithNew()
 	// 如果两个副本的种子相同，则生成出来的随机数也是相同的
 	//testSeedWithSameResult()
 
 	// fmt.Println(Random(0, 0))//报错
 	//fmt.Println(Random(0, 1)) //结果只有0
-	//fmt.Println(Random(0, 2)) //结果为0或者1
+	fmt.Println(Random(0, 2)) //结果为0或者1
 	//
 	////随机字符串
 	//randStr()
+	//fmt.Println(RandStr(8))
+
+	shoperName := RandStr(8)
+	shoperPhone := fmt.Sprintf("136%d", Random(10000000, 99999999))
+	shoperEmail := fmt.Sprintf("%s@google.com", shoperName)
+	fmt.Println(shoperName)
+	fmt.Println(shoperEmail)
+	fmt.Println(shoperPhone)
+
 }
 
 // 所以最终的生成随机数的方案为：
@@ -79,4 +88,15 @@ func randStr() {
 	newClientKey := string(keyBytes)
 
 	fmt.Println(newClientKey)
+}
+
+const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+func RandStr(n int) string {
+	lenLetters := len(letters)
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letters[rand.Int63()%int64(lenLetters)]
+	}
+	return string(b)
 }

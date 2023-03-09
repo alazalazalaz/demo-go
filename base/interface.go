@@ -2,19 +2,19 @@ package main
 
 import "fmt"
 
-type Car struct{
-	Type string
-	Name string
+type Car struct {
+	Type     string
+	Name     string
 	WheelNum int
-	Light bool
+	Light    bool
 }
 
-type Bike struct{
+type Bike struct {
 	Type string
 	Name string
 }
 
-func main(){
+func main() {
 	var traffic interface{}
 	traffic = getMyTraffic(4)
 	switch traffic.(type) {
@@ -28,11 +28,10 @@ func main(){
 	fmt.Println(traffic)
 }
 
-
-func getMyTraffic(wheelNum int)interface{}{
+func getMyTraffic(wheelNum int) interface{} {
 	myCar := &Car{
-		Type: "car",
-		Name: "my car",
+		Type:     "car",
+		Name:     "my car",
 		WheelNum: 4,
 	}
 
@@ -40,9 +39,9 @@ func getMyTraffic(wheelNum int)interface{}{
 		Type: "bike",
 		Name: "my bike",
 	}
-	if wheelNum>2 {
+	if wheelNum > 2 {
 		return myCar
-	}else{
+	} else {
 		return myBike
 	}
 }
