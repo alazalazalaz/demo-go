@@ -6,6 +6,7 @@ import (
 	"github.com/thinkeridea/go-extend/exunicode/exutf8"
 	"log"
 	"reflect"
+	"strconv"
 	"unicode/utf8"
 	"unsafe"
 )
@@ -145,4 +146,9 @@ func runeToString() {
 		s += string(k)
 	}
 	log.Println(s)
+}
+
+//整形转字符串
+func intToString(base int) string {
+	return strconv.Itoa(base)
 }
