@@ -6,27 +6,29 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"github.com/google/uuid"
-	"log"
-	"strings"
 )
 
 func main() {
-	log.Println(uuid.New().String())
-	log.Println(uuid.New().String())
-	log.Println(uuid.New().String())
-	log.Println(uuid.New().String())
-	log.Println(uuid.New().String())
-	log.Println(uuid.New().String())
-	id := uuid.New().String()
-	spanId := id[24:]
-	log.Println(id)
-	log.Println(spanId)
+	fmt.Println(is301Game("G301"))
+	fmt.Println(is301Game("g301"))
+	fmt.Println(is301Game("g302"))
+}
 
-	log.Println(adyenValidateHMAC("F199834FA0537AC7782B862A32232354CA1BC646F1085C8C654744F702CF3526"))
-	//pointtest()
+func is301Game(msg string) bool {
+	switch msg {
+	case "G301":
+	case "g301":
+		return false
+	case "WZ":
+	case "wz":
+	case "G301_MD":
+	case "g301_md":
+	case "g301md":
+	default:
+		return false
+	}
 
-	fmt.Println(strings.SplitN("aa:bb:cc", ":", 2)[0])
+	return true
 }
 
 func adyenValidateHMAC(hexHmacKey string) bool {

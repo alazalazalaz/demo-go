@@ -24,16 +24,16 @@ func main() {
 	var numbers = make([]int, 3, 5)
 
 	//方法2，通过数组赋值
-	var array = [4]int{1, 2, 3, 4}
+	var array = []int{1, 2}
 	var emptyArray []int //已声明，但未初始化定义
 	/*
 		2.切片截取
 	*/
 	//从startIndex到endIndex-1取值(左闭右开)
 	// s := arr[startIndex:endIndex]
-	s1 := array[:]  //所有
-	s2 := array[:2] //下标0开始到1，不含下标2
-	s3 := array[2:] //下标2到最后
+	s1 := array[:]    //所有
+	s2 := array[0:20] //下标0开始到1，不含下标2
+	s3 := array[2:]   //下标2到最后
 
 	fmt.Printf("emptyArray len=%d, cap=%d\n", len(emptyArray), cap(emptyArray))
 	fmt.Printf("number len=%d, cap=%d\n", len(numbers), cap(numbers))
