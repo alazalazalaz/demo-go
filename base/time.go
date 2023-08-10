@@ -42,10 +42,22 @@ func main() {
 	fmt.Println(time.Unix(1668737916, 0).Format(time.RFC3339))
 	fmt.Println(time.Unix(1668737916, 0).Format("2006-01-02 15:04:05"))
 	fmt.Println(time.Unix(1668737916, 0).Local())
+
+	//计算时间差
+	calculate()
 }
 
 // get 13 timestamp
 func GetTimestamp() int64 {
 	return time.Now().UnixMilli()
 	//return time.Now().UnixNano() / 1e6
+}
+
+func calculate() {
+	t := time.Now()
+	fmt.Println(t.String()) //2023-07-07 10:29:36.490158 +0800 CST m=+1.005395210
+	time.Sleep(time.Millisecond * 10)
+	interval := time.Since(t)
+	fmt.Println(interval.String())       //10.7666ms
+	fmt.Println(interval.Milliseconds()) //10
 }

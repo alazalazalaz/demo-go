@@ -9,7 +9,7 @@ import (
 
 //panic 能够改变程序的控制流，调用 panic 后会立刻停止执行当前函数的剩余代码，并在当前 Goroutine 中递归执行调用方的 defer；
 //recover 可以中止 panic 造成的程序崩溃。它是一个只能在 defer 中发挥作用的函数，在其他作用域中调用不会发挥作用；
-func main(){
+func main() {
 	//testP1()
 	fmt.Println("继续...")
 
@@ -22,13 +22,13 @@ func main(){
 
 var testGoForPanicNum int = 0
 
-func testP1(){
+func testP1() {
 	fmt.Println("im testP1")
 	defer func() {
-		if err := recover(); err != nil{
+		if err := recover(); err != nil {
 			fmt.Println(err)
 		}
-		if err := recover(); err != nil{//这里是抓不到的
+		if err := recover(); err != nil { //这里是抓不到的
 			fmt.Println("行行行", err)
 		}
 	}()
@@ -38,8 +38,7 @@ func testP1(){
 	fmt.Println("这个不会执行")
 }
 
-
-func testGo(){
+func testGo() {
 	// 主进程抓不到子进程的panic
 	defer func() {
 		if err := recover(); err != nil {
@@ -66,9 +65,9 @@ func testGo(){
 	log.Println("main")
 }
 
-func testGoForPanic(){
+func testGoForPanic() {
 	go func() {
-		for  {
+		for {
 			log.Println("sub goroutine print A")
 			funcGoA()
 			log.Println("sub goroutine print B")
@@ -84,7 +83,7 @@ func testGoForPanic(){
 	log.Println("main")
 }
 
-func funcGoA(){
+func funcGoA() {
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Println("funcGoA get panic")
