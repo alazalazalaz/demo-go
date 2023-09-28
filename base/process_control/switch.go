@@ -3,25 +3,20 @@ package main
 import "fmt"
 
 func main() {
-	a := 1
-	switch a {
-	case 3, 1:
-		fmt.Printf("1\n")
-	case 10:
-		fmt.Printf("2\n")
-	case 100:
-		fmt.Printf("3\n")
-	default:
-		fmt.Printf("none\n")
+	//会不会掉下去的问题
+	testS()
+}
+
+func testS() {
+	//结论：只会打印1和3，不会打印2
+	for a := 0; a < 4; a++ {
+		switch a {
+		case 1:
+			fmt.Printf("%d\n", a)
+		case 2:
+		case 3:
+			fmt.Printf("%d\n", a)
+		}
 	}
 
-	marks := "A"
-	switch {
-	case marks == "A":
-		fmt.Printf("A\n")
-	case marks == "B":
-		fmt.Printf("B\n")
-	default:
-		fmt.Printf("others\n")
-	}
 }

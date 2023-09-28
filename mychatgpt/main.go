@@ -16,7 +16,7 @@ func main() {
 
 	//models.CreateChatCompletion("chinese", []string{"english"})
 	for i := 0; i < 1; i++ {
-		models.CreateChatCompletion("", []string{"ja"}, "你好")
+		models.CreateChatCompletion("", []string{"de"}, "今天天气不错")
 	}
 }
 
