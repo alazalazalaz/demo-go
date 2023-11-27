@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -45,6 +46,9 @@ func main() {
 
 	//计算时间差
 	calculate()
+
+	//字符串转时间戳
+	stringToTimestamp()
 }
 
 // get 13 timestamp
@@ -60,4 +64,26 @@ func calculate() {
 	interval := time.Since(t)
 	fmt.Println(interval.String())       //10.7666ms
 	fmt.Println(interval.Milliseconds()) //10
+}
+
+//字符串转时间戳
+func stringToTimestamp() {
+	s1 := "Nov 19 17:16:03 2023 +0800"
+	//s1 := "Nov 9 17:16:03 2023"
+	//s1 := "07:49:13 2022-Jun-9"
+	loc, err := time.LoadLocation("UTC")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	//time.RFC3339
+	//http.TimeFormat
+	//theTime, err := time.ParseInLocation("15:04:05 2006-Jan-2", s1, loc)
+	theTime, err := time.ParseInLocation("Jan _2 15:04:05 2006 -0700", s1, loc)
+	if err != nil {
+		fmt.Printf("err:%v", err)
+		return
+	}
+	log.Printf("itme:%v", theTime.Unix())
+	//itme:1654760953
 }

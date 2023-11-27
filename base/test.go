@@ -1,13 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"log"
+)
+
+type ContentState map[string]interface{}
 
 func main() {
-	var needDeleteTokens, needDeleteTokensRetry []string
-	needDeleteTokens = getNeed()
-	needDeleteTokensRetry = []string{"ff"}
-	needDeleteTokens = append(needDeleteTokens, needDeleteTokensRetry...)
-	fmt.Println(needDeleteTokens)
+	t := "abcdefghijklmnopqrstuvwxyz1"
+	prefix := t[len(t)-16:]
+	log.Printf(prefix)
 }
 
 func getNeed() []string {

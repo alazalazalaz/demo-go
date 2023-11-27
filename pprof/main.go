@@ -11,34 +11,34 @@ import (
 
 /**
 测试pprof的使用
- */
-func main(){
+*/
+func main() {
 	go func() {
-		testPprof()
+		for i := 0; i < 10; i++ {
+			testPprof()
+			time.Sleep(time.Second * 10)
+		}
 	}()
 
-	http.HandleFunc("/hello", helloHandler)
-	http.HandleFunc("/test", testHandler)
+	//http.HandleFunc("/hello", helloHandler)
+	//http.HandleFunc("/test", testHandler)
 	http.ListenAndServe("127.0.0.1:1111", nil)
 	fmt.Println("over")
 }
 
-func testPprof(){
-	tick := time.Tick(time.Second / 100)
+func testPprof() {
 	var buf []byte
-	for range tick {
-		buf = append(buf, make([]byte, 1024*1024)...)
-	}
+	buf = append(buf, make([]byte, 1024*1024)...)
 	path.Join()
 }
 
-func helloHandler(w http.ResponseWriter, r *http.Request){
+func helloHandler(w http.ResponseWriter, r *http.Request) {
 	for {
 		io.WriteString(w, "hello word")
 		time.Sleep(time.Second)
 	}
 }
 
-func testHandler(w http.ResponseWriter, r *http.Request){
+func testHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "test")
 }

@@ -3,5 +3,5 @@ package main
 import "demo/myazuregpt/models"
 
 func main() {
-	models.Chat("", []string{"ja"}, "你好")
+	models.Chat("", []string{"ja", "en"}, "你好")
 }
