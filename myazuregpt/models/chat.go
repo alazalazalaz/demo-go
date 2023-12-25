@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type chatRequest struct {
@@ -58,25 +59,23 @@ type errorResponse struct {
 
 func Chat(source string, target []string, q string) error {
 	prompt := ""
-	//targetString := strings.Join(target, "|")
-	//localizationString := ""
+	targetString := strings.Join(target, "|")
+	localizationString := ""
 
-	//if source == "" {
-	//	multiPrompt, targetPrompt := "", ""
-	//	if len(target) > 1 {
-	//		multiPrompt = "the target language is multi and separate with |."
-	//	}
-	//	for _, v := range target {
-	//		targetPrompt += fmt.Sprintf("Translated->%s:\n", v)
-	//	}
-	//	prompt = fmt.Sprintf("%s Translate the text ```%s``` to target language %s and detect the source language.%s Returns only results like the format below, no interpretation needed.\n"+
-	//		"SourceLanguage:\n"+
-	//		"%s", localizationString, q, targetString, multiPrompt, targetPrompt)
-	//} else {
-	//	prompt = fmt.Sprintf("%s Translate the following text from %s to %s.Replay me with english. Returns only results, no interpretation needed. \n ```%s```\n", localizationString, source, targetString, q)
-	//}
-
-	prompt = "Translate the text ```你好``` to target language en,ja and detect the source language. Returns with JSON format."
+	if source == "" {
+		multiPrompt, targetPrompt := "", ""
+		if len(target) > 1 {
+			multiPrompt = "the target language is multi and separate with |."
+		}
+		for _, v := range target {
+			targetPrompt += fmt.Sprintf("Translated->%s:\n", v)
+		}
+		prompt = fmt.Sprintf("%s Translate the text ```%s``` to target language %s and detect the source language.%s Returns only results like the format below, no interpretation needed.\n"+
+			"SourceLanguage:\n"+
+			"%s", localizationString, q, targetString, multiPrompt, targetPrompt)
+	} else {
+		prompt = fmt.Sprintf("%s Translate the following text from %s to %s.Replay me with english. Returns only results, no interpretation needed. \n ```%s```\n", localizationString, source, targetString, q)
+	}
 
 	url := fmt.Sprintf("%s/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-05-15", consts.AZURE_ENDPOINT)
 	data := chatRequest{
