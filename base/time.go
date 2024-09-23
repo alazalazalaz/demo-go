@@ -66,7 +66,7 @@ func calculate() {
 	fmt.Println(interval.Milliseconds()) //10
 }
 
-//字符串转时间戳
+// 字符串转时间戳
 func stringToTimestamp() {
 	s1 := "Nov 19 17:16:03 2023 +0800"
 	//s1 := "Nov 9 17:16:03 2023"
@@ -86,4 +86,14 @@ func stringToTimestamp() {
 	}
 	log.Printf("itme:%v", theTime.Unix())
 	//itme:1654760953
+}
+
+func testTicker() {
+	ticker := time.NewTicker(time.Second * 2)
+	for {
+		select {
+		case <-ticker.C:
+			fmt.Println("定时器")
+		}
+	}
 }
